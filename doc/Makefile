@@ -1,7 +1,7 @@
 # File:   Makefile
 # Author: M. P. Hayes, UCECE
 # Date:   11 Sep 2010
-# Descr:  Makefile for ex4 docs
+# Descr:  Makefile for ex3 docs
 
 DEL = rm
 
