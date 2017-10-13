@@ -10,11 +10,11 @@
 #define speed 5     // constant between 1 and 10 for game speed
 
 struct ball {
-    int ballx = 0;
-    int ballx_velocity = 1;
-    int bally = 2;
-    int bally_velocity = 1;
-    int balloffscreen = 0;
+    int ballx;
+    int ballx_velocity;
+    int bally;
+    int bally_velocity;
+    int balloffscreen;
 }ball;
 
 
@@ -27,6 +27,11 @@ int runball (void)
     
     int count = 0;
     int tick_count = 0;
+    int ballx = 0;
+    int ballx_velocity = 1;
+    int bally = 2;
+    int bally_velocity = 1;
+    int balloffscreen = 0;
     
     while(1)
     {
