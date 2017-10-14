@@ -9,7 +9,26 @@
 #define PACER_RATE 500
 #define MESSAGE_RATE 10
 
-void main (void)
+int paddlecheck(int paddlex){
+    
+        if(navswitch_push_event_p(NAVSWITCH_SOUTH) && count < 2) {
+            tinygl_clear();
+            tinygl_draw_line (tinygl_point (4, (3+count)), tinygl_point (4, (5+count)),1);
+            tinygl_update();
+            return paddlex + 1;
+        }
+        
+      
+        
+        if(navswitch_push_event_p(NAVSWITCH_NORTH) && count > -2) {
+            tinygl_clear();
+            tinygl_draw_line (tinygl_point (4, (1+count)), tinygl_point (4, (3+count)),1);
+            tinygl_update();
+            return paddlex - 1;
+        }
+}
+
+void padmain (void)
 {
    //pacer_init (10000);
    tinygl_init (10000);

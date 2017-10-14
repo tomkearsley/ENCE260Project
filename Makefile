@@ -12,9 +12,12 @@ DEL = rm
 
 
 # Default target.
-all: paddle.out
+all: main.out
 
 # Compile: create object files from C source files.
+main.o: main.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font5x7_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
 paddle.o: paddle.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font5x7_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
@@ -51,7 +54,7 @@ tinygl.o: ../../utils/tinygl.c ../../drivers/avr/system.h ../../drivers/display.
 
 
 # Link: create ELF output file from object files.
-paddle.out: paddle.o  ball.o pio.o system.o timer.o display.o ledmat.o navswitch.o font.o pacer.o tinygl.o
+main.out:main.o paddle.o  ball.o pio.o system.o timer.o display.o ledmat.o navswitch.o font.o pacer.o tinygl.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
@@ -64,6 +67,6 @@ clean:
 
 # Target: program project.
 .PHONY: program
-program: paddle.out
-	$(OBJCOPY) -O ihex paddle.out paddle.hex
-	dfu-programmer atmega32u2 erase; dfu-programmer atmega32u2 flash paddle.hex; dfu-programmer atmega32u2 start
+program: main.out
+	$(OBJCOPY) -O ihex main.out main.hex
+	dfu-programmer atmega32u2 erase; dfu-programmer atmega32u2 flash main.hex; dfu-programmer atmega32u2 start
