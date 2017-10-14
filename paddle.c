@@ -4,6 +4,7 @@
 #include "tinygl.h"
 #include "../fonts/font5x7_1.h"
 #include "pio.h"
+#include "ir_uart.h"
 
 
 #define PACER_RATE 500
@@ -30,7 +31,6 @@ int paddlecheck(int paddlex){
 
 void padmain (void)
 {
-   //pacer_init (10000);
    tinygl_init (10000);
    navswitch_init();
    int count = 0;
@@ -59,4 +59,5 @@ void padmain (void)
             count--;
         }
    }
+   
 }
