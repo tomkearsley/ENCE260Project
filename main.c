@@ -3,7 +3,7 @@
 #include "pacer.h"
 #include "ball.h"
 #include "paddle.h"
-
+#include "ir_uart.h"
 #define GAMESPEED 2     // constant between 1 and 10 for game speed
 #define PACERSPEED 500
 
@@ -14,6 +14,8 @@ int main (void)
     tinygl_init(PACERSPEED);
     pacer_init(PACERSPEED);
     navswitch_init ();
+    ir_uart_init();
+    
     ball pongball = {0,1,2,1,0,0};
     
     int count = 0;
@@ -39,6 +41,10 @@ int main (void)
             pongball = checkball(pongball,paddlex);
         }
         count ++;
+        
+        if(pongball.balloffscreen == 1) {
+            
+        }
         
     }
 }

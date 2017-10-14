@@ -55,6 +55,9 @@ void padmain (void)
             tinygl_update();
             count--;
         }
+   
    }
+   
+   
    
 }
