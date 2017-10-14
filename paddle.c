@@ -12,21 +12,18 @@
 
 int paddlecheck(int paddlex){
     
-        if(navswitch_push_event_p(NAVSWITCH_SOUTH) && count < 2) {
-            tinygl_clear();
-            tinygl_draw_line (tinygl_point (4, (3+count)), tinygl_point (4, (5+count)),1);
-            tinygl_update();
+        if(navswitch_push_event_p(NAVSWITCH_SOUTH)) {
+            //tinygl_draw_line (tinygl_point (0, (3+paddlex)), tinygl_point (0, (5+paddlex)),1);
             return paddlex + 1;
         }
         
       
         
-        if(navswitch_push_event_p(NAVSWITCH_NORTH) && count > -2) {
-            tinygl_clear();
-            tinygl_draw_line (tinygl_point (4, (1+count)), tinygl_point (4, (3+count)),1);
-            tinygl_update();
+        if(navswitch_push_event_p(NAVSWITCH_NORTH)) {
+            //tinygl_draw_line (tinygl_point (0, (1+paddlex)), tinygl_point (0, (3+paddlex)),1);
             return paddlex - 1;
         }
+        return paddlex;
 }
 
 void padmain (void)

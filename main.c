@@ -24,18 +24,19 @@ int main (void)
         
         navswitch_update();
         paddlex = paddlecheck(paddlex);
-        tinygl_update ();
+        
+        tinygl_update();
         tinygl_clear();
         
         
-        tinygl_draw_line (tinygl_point (0, paddlex), tinygl_point (0, paddlex+2),1);
-        
+        tinygl_draw_line (tinygl_point (0, paddlex - 1), tinygl_point (0, paddlex+1),1);
         tinygl_draw_point (tinygl_point(pongball.ballx,pongball.bally), 1);
+        
         pacer_wait();
         
         if (count >= 300/GAMESPEED) {//tick
             count = 0;
-            pongball = checkball(pongball);
+            pongball = checkball(pongball,paddlex);
         }
         count ++;
         

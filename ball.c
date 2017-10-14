@@ -18,7 +18,7 @@ typedef struct ball_s {
     int tick_count;
 }ball;
 
-ball checkball(ball gameball){
+ball checkball(ball gameball,int paddlex){
     
     if (gameball.ballx_velocity == 1) {
         if (gameball.ballx < 5) {
@@ -33,6 +33,17 @@ ball checkball(ball gameball){
     }else if (gameball.ballx_velocity == -1){
         if (gameball.ballx < 1) {
             gameball.ballx_velocity = 1;
+        }
+        
+        if (gameball.ballx == 1) {// paddle collisions
+            if (paddlex == gameball.bally) {
+                gameball.ballx_velocity = 1;
+            } else if (paddlex + 1 == (gameball.bally + gameball.bally_velocity)) {
+                gameball.ballx_velocity = 1;
+            } else if (paddlex - 1 == (gameball.bally + gameball.bally_velocity)) {
+                gameball.ballx_velocity = 1;
+            }
+            
         }
         gameball.ballx += gameball.ballx_velocity;
     }

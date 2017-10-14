@@ -19,6 +19,6 @@ typedef struct ball_s {
 
 
 /* Pace a while loop.  */
-ball checkball(ball gameball);
+ball checkball(ball gameball,int paddlex);
 
 #endif //PACER_H
