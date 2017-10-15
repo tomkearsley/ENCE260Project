@@ -56,19 +56,34 @@ int main (void)
             if(pongball.balloffscreen == 1) {
 
                 /* Alternately, send x position and y position messages.  */
-                //ir_uart_putc (pongball.bally & 0x0f);
-                //ir_uart_putc (pongball.bally_velocity & 0x0f);
-                    
+                ir_uart_putc (pongball.bally);
+                ir_uart_putc (pongball.bally_velocity);
+                pongball.balloffscreen = 0;
+                pongball.ballx_velocity = 1;
+                pongball.ballx = 0;
+                
+                                  
                 uint8_t c;
-                c = ir_uart_getc ();
+                uint8_t y;
+
+                    c = ir_uart_getc ();
+                    y = ir_uart_getc ();
+                    pongball.bally = 6-c;
+                    pongball.bally_velocity = y;
+                    pongball.ballx = 0;
+                    pongball.ballx_velocity = 1;
+                    pongball.balloffscreen = 0;
+                
+            
+                
+            }
+               
+                
+                
+                
                 
 
-                /* Decode the received message.  */
-                pongball.bally = c & 0x0f;
-                    //pongball.bally_velocity = c & 0x0f;
-                pongball.ballx = 0;
-                pongball.ballx_velocity = 1;
-                pongball.balloffscreen = 0;
+               
                 
             }
         }
