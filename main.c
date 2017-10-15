@@ -51,41 +51,19 @@ int main (void)
         count ++;
         
         
-        if(pongball.balloffscreen == 2) {
-            static uint8_t state = SEND_XPOS;
+        if(pongball.balloffscreen == 1) {
 
             /* Alternately, send x position and y position messages.  */
-            switch (state)
-            {
-            case SEND_XPOS:
                 ir_uart_putc (pongball.bally & 0x0f);
-                state = SEND_YVEL;
-                break;
-
-            case SEND_YVEL:
-                ir_uart_putc (pongball.bally_velocity & 0x0f);
-                state = SEND_XPOS;
-                break;
-            }
-            
-            
-            
+                //ir_uart_putc (pongball.bally_velocity & 0x0f);
+                
             uint8_t c;
             c = ir_uart_getc ();
             
-            
 
             /* Decode the received message.  */
-            switch (c >> 4)
-            {
-            case XPOS:
                 pongball.bally = c & 0x0f;
-                break;
-
-            case YVEL:
-                pongball.bally_velocity = c & 0x0f;
-                break;
-            }
+                //pongball.bally_velocity = c & 0x0f;
             pongball.ballx = 0;
             
             
