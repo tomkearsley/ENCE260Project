@@ -8,6 +8,10 @@
 #define GAMESPEED 2     // constant between 1 and 10 for game speed
 #define PACERSPEED 500
 
+#define PACER_RATE 500
+#define MESSAGE_RATE 30
+#define LOOP_RATE 500
+
 
   
 typedef enum {XPOS, YVEL} tx_message_t;
@@ -23,6 +27,36 @@ int main (void)
     pacer_init(PACERSPEED);
     navswitch_init();
     ir_uart_init();
+    
+     /* TODO: Initialise tinygl. */
+    tinygl_init(LOOP_RATE);
+    tinygl_font_set(&font5x7_1);
+    tinygl_text_speed_set(MESSAGE_RATE);
+
+    /* TODO: Set the message using tinygl_tlab3-ext().  */
+    tinygl_text("PONG PRESS NAVSWITCH TO START\0");
+    tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
+    
+
+    pacer_init (PACER_RATE);
+    
+    int menu = 0;
+    while(menu == 0)
+    {
+        pacer_wait();
+        
+        /* TODO: Call the tinygl update function. */
+        tinygl_update();
+        navswitch_update();
+        if(navswitch_push_event_p(NAVSWITCH_PUSH)) {
+            menu = 1;
+            break;
+        }
+        
+    }
+    
+    
+    
     
     ball pongball = {0,1,2,1,0,0};
     
@@ -77,6 +111,11 @@ int main (void)
             
                 
             }
+            if((pongball.ballx == -1)) {
+              
+                break;
+            
+            }
                
                 
                 
@@ -87,8 +126,12 @@ int main (void)
                 
             }
         }
+        tinygl_clear();
+        tinygl_text("LOSE\0");
+        tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
+        
+        
             
             
-        }
         
 }
