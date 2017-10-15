@@ -28,6 +28,7 @@ int main (void)
     
     int count = 0;
     int paddlex = 3;
+    int stage = 0;
     
     while (1)
     {
@@ -38,35 +39,38 @@ int main (void)
         tinygl_update();
         tinygl_clear();
         
-        
-        tinygl_draw_line (tinygl_point (4, paddlex - 1), tinygl_point (4, paddlex+1),1);
-        tinygl_draw_point (tinygl_point(pongball.ballx,pongball.bally), 1);
-        
-        pacer_wait();
-        
-        if (count >= 300/GAMESPEED) {//tick
-            count = 0;
-            pongball = checkball(pongball,paddlex);
-        }
-        count ++;
-        
-        
-        if(pongball.balloffscreen == 1) {
+        if (stage == 0){
+            tinygl_draw_line (tinygl_point (4, paddlex - 1), tinygl_point (4, paddlex+1),1);
+            tinygl_draw_point (tinygl_point(pongball.ballx,pongball.bally), 1);
+            
+            pacer_wait();
+            
+            if (count >= 300/GAMESPEED) {//tick
+                count = 0;
+                pongball = checkball(pongball,paddlex);
+            }
+            count ++;
+            
+            
+            
+            if(pongball.balloffscreen == 1) {
 
-            /* Alternately, send x position and y position messages.  */
-                ir_uart_putc (pongball.bally & 0x0f);
+                /* Alternately, send x position and y position messages.  */
+                //ir_uart_putc (pongball.bally & 0x0f);
                 //ir_uart_putc (pongball.bally_velocity & 0x0f);
+                    
+                uint8_t c;
+                c = ir_uart_getc ();
                 
-            uint8_t c;
-            c = ir_uart_getc ();
-            
 
-            /* Decode the received message.  */
+                /* Decode the received message.  */
                 pongball.bally = c & 0x0f;
-                //pongball.bally_velocity = c & 0x0f;
-            pongball.ballx = 0;
-            
-            
+                    //pongball.bally_velocity = c & 0x0f;
+                pongball.ballx = 0;
+                pongball.ballx_velocity = 1;
+                pongball.balloffscreen = 0;
+                
+            }
         }
             
             
