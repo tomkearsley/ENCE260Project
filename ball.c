@@ -1,3 +1,10 @@
+/**
+ * @file ball.c
+ * @authors Gavin Mcgill gmc132 59048032
+ * @date 16/Oct/2017
+ * basic ball mechanics that controll what direction the ball moves and if the ball is to collide with anything
+ * */
+
 #include "system.h"
 #include "pacer.h"
 #include "navswitch.h"

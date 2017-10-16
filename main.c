@@ -1,3 +1,13 @@
+/**
+ * @file main.c
+ * @authors Gavin Mcgill gmc132 59048032, Tom Kearsly 98112572 tke29
+ * @date 16/Oct/2017
+ * basic pong game for UCFK4
+ * to set up face ir senders and recievers towareds each other 
+ * then player one must press the nav switch to decide who starts with the ball.
+ * */
+
+
 #include "system.h"
 #include "pio.h"
 #include "pacer.h"
