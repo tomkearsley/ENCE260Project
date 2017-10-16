@@ -1,3 +1,10 @@
+/**
+ * @file paddle.c
+ * @author Thomas Kearsley tke29 98112573
+ * @date 14/10/17
+ * Simple paddle for pong game. Paddle controled using navswitch.
+ * */
+
 #include "system.h"
 #include "pacer.h"
 #include "navswitch.h"
