@@ -23,7 +23,7 @@ ball checkball(ball gameball,int paddlex){
     
     //moving towards switch
     if (gameball.ballx_velocity == 1) {
-        if (gameball.ballx > 3) {//bounce of bottom wall
+        if (gameball.ballx > 4) {//bounce of bottom wall
             gameball.ballx_velocity = -1;
         }
         
@@ -77,7 +77,7 @@ ball checkball(ball gameball,int paddlex){
     
     if (gameball.balloffscreen == 1) {
         gameball.tick_count ++;
-        if (gameball.tick_count > 10){
+        if (gameball.tick_count > 6){
             gameball.balloffscreen = 0;
             gameball.ballx = -1;
             gameball.ballx_velocity = 1;
