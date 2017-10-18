@@ -27,35 +27,20 @@
 typedef enum {XPOS, YVEL} tx_message_t;
 
 typedef enum {SEND_XPOS, SEND_YVEL} tx_state_t;
-
-void display_character (char character)
+/*
+ * allows a charachter to be diplayed in tiny gl
+ * */
+void displayCharacter (char character)
 {
     char buffer[2];
     buffer[0] = character;
     buffer[1] = '\0';
     tinygl_text (buffer);
 }
-
-int main (void)
-{    
-    
-    system_init();
-    tinygl_init(PACERSPEED);
-    pacer_init(PACERSPEED);
-    navswitch_init();
-    ir_uart_init();
-    
-     /* TODO: Initialise tinygl. */
-    tinygl_init(LOOP_RATE);
-    tinygl_font_set(&font5x7_1);
-    tinygl_text_speed_set(MESSAGE_RATE);
-
-    /* TODO: Set the message using tinygl_tlab3-ext().  */
-    tinygl_text("PONG PRESS NAVSWITCH TO START\0");
-    //tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
-    
-
-    pacer_init (PACER_RATE);
+/*wait for the player to press the nav switch
+ * or for a signal from the other board that they are player 1
+ * */
+char mainMenu (void) {
     
     int menu = 0;
     char player = 'O';
@@ -83,9 +68,33 @@ int main (void)
         }
         
     }
+    return player;
+}
+
+/*
+ * initialises all functions
+ * */
+void startUp(void) {
+    system_init();
+    tinygl_init(PACERSPEED);
+    pacer_init(PACERSPEED);
+    navswitch_init();
+    ir_uart_init();
     
-    //display what player you are
-    display_character(player);
+     /* TODO: Initialise tinygl. */
+    tinygl_init(LOOP_RATE);
+    tinygl_font_set(&font5x7_1);
+    tinygl_text_speed_set(MESSAGE_RATE);
+
+    /* TODO: Set the message using tinygl_tlab3-ext().  */
+    tinygl_text("PONG PRESS NAVSWITCH TO START\0");
+    //tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
+    pacer_init (PACER_RATE);
+}
+
+// displays 'O' if the player is player one and 'T' if the player is player two
+void displayPlayer (char player) {
+    displayCharacter(player);
     int showtime = 0;
     while(showtime < 1000)
     {
@@ -98,6 +107,24 @@ int main (void)
         showtime ++;
         
     }
+}
+
+/*
+ * main function calls all other functions 
+ * 
+ * */
+
+int main (void)
+{    
+    
+    startUp();
+    
+    
+    char player = mainMenu();
+
+    displayPlayer(player);
+    //display what player you are
+
     
     ball pongball = {0,1,2,1,0,0};
     if (player == 'T') {
@@ -137,6 +164,7 @@ int main (void)
             }
             count ++;
             
+            //check if this board has won
             if (ir_uart_read_ready_p ()) {
                 win = ir_uart_getc();
                 if (win == 'Y') {
@@ -157,7 +185,7 @@ int main (void)
                 }
                 }
             }
-            
+            // check if this board has lost
             if((pongball.ballx == 5)) {
                 ir_uart_putc('Y');
                 stage = 1;
@@ -182,7 +210,7 @@ int main (void)
             
         }
         tinygl_clear();
-        tinygl_text("LOSE\0");
+        tinygl_text("LOSER\0");
         tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
         
         
